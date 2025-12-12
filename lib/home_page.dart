@@ -28,7 +28,37 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Container(),
+      body: StreamBuilder<QuerySnapshot>(stream: noteRef!.snapshots(), builder: (_ , snap){
+
+        if(snap.connectionState==ConnectionState.waiting){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if(snap.hasError){
+          return Center(
+            child: Text("${snap.error}"),
+          );
+        }
+
+        if(snap.hasData){
+          return snap.data!.docs.isNotEmpty ? ListView.builder(
+            itemCount: snap.data!.docs.length,
+              itemBuilder: (_, index){
+            Map<String, dynamic> data = snap.data!.docs[index].data() as Map<String, dynamic>;
+            return ListTile(
+              title: Text(data["title"]),
+              subtitle: Text(data["desc"]),
+            );
+          }) : Center(
+            child: Text('No Data Found'),
+          );
+        }
+
+
+        return Container();
+      }),
       floatingActionButton: FloatingActionButton(onPressed: () async{
         showModalBottomSheet(context: context, builder: (_){
           return Padding(
