@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_exp_422/cat_page.dart';
 import 'package:firebase_exp_422/firebase_options.dart';
 import 'package:firebase_exp_422/login/login_page.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LoginPage(),
+      home: CatPage(),
     );
   }
 }
