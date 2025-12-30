@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_exp_422/cat_page.dart';
 import 'package:firebase_exp_422/firebase_options.dart';
 import 'package:firebase_exp_422/login/login_page.dart';
+import 'package:firebase_exp_422/notification_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -9,6 +11,10 @@ import 'home_page.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService.instance.initialize();
+
+  FirebaseMessaging.onBackgroundMessage(NotificationService.handleBackgroundMessage);
+
   runApp(const MyApp());
 }
 
